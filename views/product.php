@@ -39,7 +39,7 @@
         addToCartBtn.addEventListener('click', function () {
             let productId = "<?php echo $product['id']; ?>";
             let quantity = parseInt(document.querySelector('.counter-value').innerText);
-            let customerId = "<?php echo $_SESSION['customer']['id']; ?>";
+            //let customerId = "<?php //echo $_SESSION['customer']['id']; ?>//";
 
             let xhr = new XMLHttpRequest();
             xhr.open('POST', 'addToCart.php', true);
