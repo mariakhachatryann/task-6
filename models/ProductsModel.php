@@ -17,7 +17,7 @@ class ProductsModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getProductById(int $productId)
+    public function getProductById($productId)
     {
         $stmt = $this->connection->prepare("SELECT * FROM products WHERE id = :id");
         $stmt->execute([':id' => $productId]);

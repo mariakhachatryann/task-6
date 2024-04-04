@@ -4,12 +4,14 @@ require_once 'connection.php';
 require_once 'views/components/bootstrap.php';
 require_once 'views/components/_nav.php';
 
-require_once 'models/ProductsModel.php';
-require_once 'controllers/ProductsController.php';
 require_once 'models/AdminModel.php';
 require_once 'controllers/AdminController.php';
-require_once 'controllers/CustomerController.php';
-require_once 'models/CustomerModel.php';
+require_once 'models/ProductsModel.php';
+require_once 'controllers/ProductsController.php';
+require_once 'controllers/OrdersController.php';
+require_once 'models/OrdersModel.php';
+
+unset($_SESSION['orderConfirmed']);
 
 $action = $_GET['action'] ?? null;
 $productId = $_GET['id'] ?? null;
@@ -27,26 +29,6 @@ switch ($action) {
         $controller = new AdminController();
         $controller->logout();
     break;
-    case 'customerLogout':
-        $controller = new CustomerController();
-        $controller->logout();
-    break;
-    case 'signView':
-        $controller = new CustomerController();
-        $controller->renderSign();
-    break;
-    case 'sign':
-        $controller = new CustomerController();
-        $controller->sign();
-        break;
-    case 'loginView':
-        $controller = new CustomerController();
-        $controller->renderLogin();
-    break;
-    case 'login':
-        $controller = new CustomerController();
-        $controller->login();
-        break;
     case 'delete':
         $controller = new ProductsController();
         $controller->deleteProduct($productId);
@@ -71,27 +53,35 @@ switch ($action) {
         $controller = new ProductsController();
         $controller->getProductById($productId);
     break;
+    case 'addToCart':
+        $controller = new ProductsController();
+        $controller->addToCart();
+        break;
     case 'customerCartView':
-        $controller = new CustomerController();
-        $controller->renderCart();
+        $controller = new ProductsController();
+        $controller->renderProducts();
+    break;
+    case 'removeFromCart':
+        $controller = new ProductsController();
+        $controller->removeFromCart($productId);
+    break;
+    case 'checkout':
+        $controller = new OrdersController();
+        $controller->orderInfoPage();
+    break;
+    case 'confirm':
+        $controller = new OrdersController();
+        $controller->confirm();
+    break;
+    case 'orderPage':
+        $controller = new OrdersController();
+        $controller->orderConfirmPage();
+    break;
+    case 'orders':
+        $controller = new OrdersController();
+        $controller->getOrders();
     break;
     default:
         $controller = new ProductsController();
         $controller->getAllProducts();
 }
-
-//$username = "maria_kh";
-//$password = password_hash("mmm582313", PASSWORD_DEFAULT);
-//
-//$stmt = $connection->prepare("INSERT INTO admins (username, password) VALUES (:username, :password)");
-//
-//// Bind parameters
-//$stmt->bindParam(':username', $username);
-//$stmt->bindParam(':password', $password);
-//
-//// Execute the query
-//if ($stmt->execute()) {
-//    echo "Admin added successfully.";
-//} else {
-//    echo "Error: Unable to add admin.";
-//}

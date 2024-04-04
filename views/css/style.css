@@ -1,0 +1,26 @@
+
+.counter {
+    width: 160px;
+    background-color: rgb(20 103 194);
+    border-radius: .5rem;
+}
+
+.counter-plus, .counter-minus {
+    padding-bottom: 12px;
+    padding-top: 12px;
+    width: 3.5rem;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+}
+
+.counter-value {
+    width: 4rem;
+    text-align: center;
+    color: black;
+    border: 1px solid rgb(230 230 231);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

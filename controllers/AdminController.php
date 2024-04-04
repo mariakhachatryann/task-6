@@ -41,8 +41,7 @@ class AdminController {
     public function logout()
     {
         session_start();
-        $_SESSION = [];
-        session_destroy();
+        $_SESSION['admin'] = [];
 
         header('Location: index.php');
         exit();

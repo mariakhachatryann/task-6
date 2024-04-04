@@ -3,15 +3,18 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header bg-secondary text-white text-center">
-                    <h3>User Login</h3>
+                    <h3>Collect user's information for order</h3>
                 </div>
                 <div class="card-body">
-                    <form action="../index.php?action=login" method="POST">
+                    <form action="../index.php?action=orderPage" method="POST">
                         <div class="form-group">
-                            <input name="email" type="email" class="form-control" id="email" placeholder="Email">
+                            <input name="name" type="text" class="form-control" id="name" placeholder="Name">
                         </div>
                         <div class="form-group">
-                            <input name="password" type="password" class="form-control" id="password" placeholder="Password">
+                            <input name="email" type="emil" class="form-control" id="email" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <input name="address" type="text" class="form-control" id="address" placeholder="Address">
                         </div>
                         <?php if (isset($errors)) :?>
                             <?php foreach ($errors as $error):?>
@@ -19,7 +22,7 @@
                             <?php endforeach?>
                         <?php endif; ?>
                         <div class="text-center">
-                            <input name="login" value="Login" type="submit" class="btn btn-secondary">
+                            <input name="confirm" value="Confirm" type="submit" class="btn btn-secondary">
                         </div>
                     </form>
                 </div>

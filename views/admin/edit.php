@@ -1,6 +1,6 @@
 <div class="container mt-5">
     <h2 class="mb-4">Edit Product</h2>
-    <form action="index.php?action=edit&id=<?= $product['id']?>" method="POST" enctype="multipart/form-data">
+    <form action="../index.php?action=edit&id=<?= $product['id']?>" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Product Name:</label>
             <input type="text" class="form-control" id="name" name="name" value="<?php echo $product['name']; ?>" required>
@@ -24,6 +24,6 @@
         <?php endif; ?>
         <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
         <input type="submit" name="update" value="Update Product" class="btn btn-primary">
-        <a href="index.php" class="btn btn-secondary">Cancel</a>
+        <a href="../index.php" class="btn btn-secondary">Cancel</a>
     </form>
 </div>

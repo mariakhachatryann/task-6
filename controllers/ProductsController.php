@@ -10,6 +10,7 @@ class ProductsController {
 
     public function getAllProducts()
     {
+
         $products = $this->model->getAllProducts();
         require_once 'views/index.php';
     }
@@ -19,7 +20,7 @@ class ProductsController {
         if (empty($_SESSION['admin'])) {
             header("Location: index.php");
         } else {
-            require_once "views/addProduct.php";
+            require_once "views/admin/addProduct.php";
         }
     }
 
@@ -72,7 +73,7 @@ class ProductsController {
             header("Location: index.php");
         } else {
             $product = $this->model->getProductById($productId);
-            require_once 'views/edit.php';
+            require_once 'views/admin/edit.php';
         }
     }
 
@@ -111,6 +112,80 @@ class ProductsController {
                 exit;
             }
 
+        }
+    }
+    public function removeFromCart($productId): void
+    {
+        if (isset($_SESSION['cart'])) {
+            foreach ($_SESSION['cart'] as $key => $item) {
+                if ($item['id'] === $productId) {
+                    unset($_SESSION['cart'][$key]);
+                }
+            }
+        }
+        header("Location: index.php?action=customerCartView");
+        exit();
+    }
+
+    public function getProductsFromCart()
+    {
+        $products = [];
+        $sumOfPrice = 0;
+
+        if (isset($_SESSION['cart'])) {
+            foreach ($_SESSION['cart'] as $item) {
+                $productId = $item['id'];
+                $quantity = $item['quantity'];
+
+                $prod = $this->model->getProductById($productId);
+
+                if (empty($prod)) {
+                    $this->removeFromCart($productId);
+                } else {
+                    $products[] = [
+                        'id' => $productId,
+                        'quantity' => $quantity,
+                        'name' => $prod['name'],
+                        'description' => $prod['description'],
+                        'image_path' => $prod['image_path'],
+                        'price' => $prod['price']
+                    ];
+
+                    $sumOfPrice += ($prod['price'] * $quantity);
+                }
+            }
+        }
+        $products = array_reverse($products);
+        return [$products, $sumOfPrice];
+    }
+
+    public function renderProducts()
+    {
+        $products = $this->getProductsFromCart()[0];
+        $sumOfPrice = $this->getProductsFromCart()[1];
+        require_once 'views/customer/cart.php';
+    }
+
+    public function addToCart()
+    {
+        if(isset($_POST['productId'], $_POST['quantity'])) {
+            $productId = $_POST['productId'];
+            $qnt = $_POST['quantity'];
+
+            if (!isset($_SESSION['cart'])) {
+                $_SESSION['cart'] = [];
+            }
+
+            $productIndex = array_search($productId, array_column($_SESSION['cart'], 'id'));
+
+            if ($productIndex !== false) {
+                $_SESSION['cart'][$productIndex]['quantity'] += $qnt;
+            } else {
+                $_SESSION['cart'][] = [
+                    'id' => $productId,
+                    'quantity' => $qnt
+                ];
+            }
         }
     }
 }

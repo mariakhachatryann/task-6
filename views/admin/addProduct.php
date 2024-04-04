@@ -1,6 +1,6 @@
 <div class="container mt-5">
     <h2 class="mb-4">Add Product</h2>
-    <form action="index.php?action=addProduct" method="POST" enctype="multipart/form-data">
+    <form action="../index.php?action=addProduct" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Product Name:</label>
             <input type="text" class="form-control" id="name" name="name" required>
@@ -23,6 +23,6 @@
             <?php endforeach?>
         <?php endif; ?>
         <input type="submit" value="Add Product" name="add" class="btn btn-primary">
-        <a href="index.php" class="btn btn-secondary">Cancel</a>
+        <a href="../index.php" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
